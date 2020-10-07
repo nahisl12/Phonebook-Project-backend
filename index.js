@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config(); // imported to use .env config
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const cors = require('cors');
+const cors = require('cors'); // Required for front-backend communication
 const Person = require('./models/person');
 
 morgan.token('id', (req) => {
@@ -30,12 +30,6 @@ app.get('/api/persons', (request, response) => {
   });
 });
 
-// const unknownEndpoint = (request, response) => {
-//   response.status(404).send({ error: 'unknown endpoint' })
-// }
-
-// app.use(unknownEndpoint);
-
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
   if(error.name === 'CastError') {
@@ -61,14 +55,6 @@ app.get('/api/persons/:id', (request, response, next) => {
       }
     })
     .catch(error => next(error));
-  // const id = Number(request.params.id);
-  // const person = persons.find(person => person.id === id);
-
-  //  if(person) {
-  //    response.json(person);
-  //  } else {
-  //    response.status(404).end();
-  //  }
 });
 
 // add person
@@ -112,9 +98,6 @@ app.delete('/api/persons/:id', (request, response, next) => {
       response.status(204).end();
     })
     .catch(error => next(error));
-  // const id = Number(request.params.id);
-  // persons = persons.filter(person => person.id !== id);
-  // response.status(202).end();
 });
 
 const PORT = process.env.PORT;
